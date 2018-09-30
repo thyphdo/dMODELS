@@ -1,0 +1,237 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>CreateKML.m</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-06-05"><meta name="DC.source" content="CreateKML.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>CreateKML.m</h1><!--introduction--><p>M. Battaglia - <a href="mailto:mbattaglia@usgs.gov">mbattaglia@usgs.gov</a></p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Description</a></li><li><a href="#2">Program I/O files</a></li><li><a href="#3">To run the software</a></li><li><a href="#4">See KML files in Google Earth</a></li><li><a href="#5">USGS Software Disclaimer</a></li></ul></div><h2 id="1">Description</h2><p>Version: (05/11/2017)</p><p>This program reads the GPS input data file and creates two KML files:</p><div><ul><li>[nameOfGPSdataFile]Map.kml</li></ul></div><p>map with position of GPS sites</p><div><ul><li>[nameOfGPSdataFile]Vec.kml</li></ul></div><p>vector plot of GPS deformation velocities (or displacements)</p><h2 id="2">Program I/O files</h2><p><b>Input files</b></p><div><ul><li>InputDataFile.txt               : text file with inversion parameters</li><li>[GPSdatafile].txt               : text file with GPS data</li></ul></div><p><b>Ouput files</b></p><div><ul><li>[nameOfGPSdataFile]Map.kml      : KML file</li><li>[nameOfGPSdataFile]Vec.kml      : KML file</li></ul></div><p><b>Examples</b></p><p>Examples of the input and output files are available in the folder <i>examples</i></p><h2 id="3">To run the software</h2><p><b>To run the compiled version</b></p><p>1 MATLAB Compiler</p><p><img vspace="5" hspace="5" src="readme.jpg" alt=""> </p><p>2 The following files/folders must be in the same directory of CreateKML.exe</p><p><img vspace="5" hspace="5" src="CreateKML(1).jpg" alt=""> </p><p>3 Edit the <i>GPS data file</i> and <i>InputDataFile.txt</i></p><p>4 Double click on CreateKML.exe</p><p><b>To run the MATLAB version</b></p><p>The software runs on 64-bit GNU/Linux, Mac OS X, or MS-Windows, and it requires Matlab 9.2 (R2017a) or later. It is not currently usable on any 32-bit platform, on Solaris, or with Octave.</p><p>1 The following files/folders must be in the same directory of CreateKML.m</p><p><img vspace="5" hspace="5" src="CreateKML(2).jpg" alt=""> </p><p>2 Edit the <i>GPS data file</i> and <i>InputDataFile.txt</i></p><p>3 Run CreateKML.m</p><h2 id="4">See KML files in Google Earth</h2><p>Map created using <i>Augustine2006Map.kml</i> and <i>Augustine2006Vec.kml</i></p><p><img vspace="5" hspace="5" src="CreateKML(3).jpg" alt=""> </p><h2 id="5">USGS Software Disclaimer</h2><p>The software and related documentation were developed by the U.S. Geological Survey (USGS) for use by the USGS in fulfilling its mission. The software can be used, copied, modified, and distributed without any fee or cost. Use of appropriate credit is requested.</p><p>The USGS provides no warranty, expressed or implied, as to the correctness of the furnished software or the suitability for any purpose. The software has been tested, but as with any complex software, there could be undetected errors. Users who find errors are requested to report them to the USGS. The USGS has limited resources to assist non-USGS users; however, we make an attempt to fix reported problems and help whenever possible.</p><p><b>THE SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND</b></p><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% CreateKML.m 
+% 
+% M. Battaglia - mbattaglia@usgs.gov
+%
+%% Description
+%
+% Version: (05/11/2017)
+%
+% This program reads the GPS input data file and creates two KML files:
+% 
+% * [nameOfGPSdataFile]Map.kml
+%
+% map with position of GPS sites
+%
+% * [nameOfGPSdataFile]Vec.kml
+%
+% vector plot of GPS deformation velocities (or displacements)
+%
+%% Program I/O files
+%
+% *Input files*
+%
+% * InputDataFile.txt               : text file with inversion parameters
+% * [GPSdatafile].txt               : text file with GPS data
+%
+% *Ouput files*
+%
+% * [nameOfGPSdataFile]Map.kml      : KML file 
+% * [nameOfGPSdataFile]Vec.kml      : KML file 
+%
+% *Examples*
+%
+% Examples of the input and output files are available in the folder
+% _examples_
+%
+%% To run the software 
+%
+% *To run the compiled version* 
+% 
+% 1 MATLAB Compiler
+%
+% <<readme.jpg>>
+% 
+% 2 The following files/folders must be in the same directory of CreateKML.exe
+% 
+% <<CreateKML(1).jpg>>
+%
+% 3 Edit the _GPS data file_ and _InputDataFile.txt_
+%
+% 4 Double click on CreateKML.exe
+% 
+% *To run the MATLAB version* 
+%
+% The software runs on 64-bit GNU/Linux, Mac OS X, or MS-Windows, and it requires 
+% Matlab 9.2 (R2017a) or later. It is not currently usable on any 32-bit platform, 
+% on Solaris, or with Octave.
+%
+% 1 The following files/folders must be in the same directory of CreateKML.m
+% 
+% <<CreateKML(2).jpg>>
+%
+% 2 Edit the _GPS data file_ and _InputDataFile.txt_
+%
+% 3 Run CreateKML.m
+%
+%% See KML files in Google Earth
+%
+% Map created using _Augustine2006Map.kml_ and _Augustine2006Vec.kml_
+%
+% <<CreateKML(3).jpg>>
+%
+%% USGS Software Disclaimer 
+% The software and related documentation were developed by the U.S. 
+% Geological Survey (USGS) for use by the USGS in fulfilling its mission. 
+% The software can be used, copied, modified, and distributed without any 
+% fee or cost. Use of appropriate credit is requested. 
+%
+% The USGS provides no warranty, expressed or implied, as to the correctness 
+% of the furnished software or the suitability for any purpose. The software 
+% has been tested, but as with any complex software, there could be undetected 
+% errors. Users who find errors are requested to report them to the USGS. 
+% The USGS has limited resources to assist non-USGS users; however, we make 
+% an attempt to fix reported problems and help whenever possible. 
+%
+% *THE SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND*
+
+%%
+
+% INITIALIZE PARAMETERS
+clearvars; close all; clc;
+% load external function path
+
+%%
+
+% READ INPUT PARAMETER FILE 
+fid0 = fopen('InputDataFile.txt','r');
+% define file names
+FileName = textscan(fid0,'%s',1,'CommentStyle','%'); 
+filename = strtok(char(FileName{1}),'.');
+gpsFile = strcat(filename,'.txt');                                 % GPS data file
+kmlFileMap = strcat(filename,'Map.kml');                                 % KML file
+kmlFileVec = strcat(filename,'Vec.kml');                                 % KML file
+
+%% 
+
+% READ DATA FILES  
+fprintf(1,'REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH LOAD GPS DATA REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-, loading %s\n',gpsFile);
+fidinp = fopen(gpsFile,'r');
+Mcom = textscan(fidinp,'%q',1); 
+    comment = char(Mcom{1});  
+Mven = textscan(fidinp,'%*s %f %f %f',1,'CommentStyle','%');
+    Xvent = Mven{1}; Yvent = Mven{2}; altvent = Mven{3}; 
+Mdat = textscan(fidinp,'%s %f %f %f %f %f %f %f %f %f','CommentStyle','%');
+    site = Mdat{1}; lat = Mdat{2}; long = Mdat{3}; alt = Mdat{4};
+    u = Mdat{5}; du = Mdat{6}; 
+    v = Mdat{7}; dv = Mdat{8}; 
+    w   = Mdat{9}; dw = Mdat{10};
+
+
+%% 
+
+% CREATE A KML FILE FOR GOOGLE EARTH
+
+% GPS SITES LOCATIOn
+iconFilename = 'placemark_circle.png';
+kmlwritepoint(kmlFileMap,lat,long,'Name',site,'IconScale',1,'Icon',iconFilename);
+
+% GPS VELOCITY VECTORS
+figure('Visible','off'); 
+% horizontal and vertical scale
+hscale = 20*max(sqrt(u.^2+v.^2));                                               
+% vector plot - data
+h1 = quiver(long,lat,u/hscale,v/hscale,'r','LineWidth',1.5,'AutoScale','off','MaxHeadSize',0.1);     
+hU = get(h1,'UData') ;
+hV = get(h1,'VData') ;
+set(h1,'UData',hU/hscale,'VData',hV/hscale);
+% define vector lines
+du = u./hscale; dv = v./hscale;
+latV = nan(9*length(long)-1,1); longV = latV;
+% define arrowheads
+Lx = 0.1*max(du); Ly=Lx; tp = pi/6; T = atan(v./u); 
+for j=1:length(long)
+    for i=1+9*(j-1)
+        latV(i)    = h1.YData(j);
+        latV(i+1)  = h1.YData(j)+ dv(j);
+        latV(i+3)  = h1.YData(j)+ dv(j);  
+        latV(i+4)  = h1.YData(j)+ dv(j) -sign(u(j))*Lx*sin(T(j)-tp);
+        latV(i+6)  = h1.YData(j)+ dv(j);  
+        latV(i+7)  = h1.YData(j)+ dv(j) -sign(u(j))*Lx*cos(90-T(j)-2*tp);
+        longV(i)    = h1.XData(j);
+        longV(i+1)  = h1.XData(j) + du(j);
+        longV(i+3)  = h1.XData(j) + du(j);  
+        longV(i+4)  = h1.XData(j) + du(j) -sign(u(j))*Ly*cos(T(j)-tp);
+        longV(i+6)  = h1.XData(j) + du(j);  
+        longV(i+7)  = h1.XData(j)  + du(j) -sign(u(j))*Ly*sin(90-T(j)-2*tp);
+    end
+end
+    
+kmlwritepolygon(kmlFileVec,latV,longV,'EdgeColor','red','LineWidth',2);
+
+
+%% 
+
+% END OF SCRIPT
+fclose('all'); disp('That''s all Folks!');
+##### SOURCE END #####
+--></body></html>

@@ -1,0 +1,20 @@
+GPS data from Augustine volcano, Ref: Table 1 from Cervelli et al (2006)
+Input data file: Augustine2006.txt
+X2v: 2.35
+nLoops: 64
+
+Source parameters
+X0,Y0 : location [UTM]
+Z0    : depth [m b.s.l.]
+dP    : dimensionless pressure change
+dV    : volume change (1E6 m^3 or m^3/yr)
+X0 Y0 Z0 radius dP(-) dV
+  475626  6580395     16  250 0.012  0.59
+
+Site x y alt E model dE N model dN W model dW
+ AUGL   479886  6581340   104 0.048 0.000 0.018 0.003 0.000 0.012 0.061 0.000 0.037
+ AV01   473802  6580063   487 -0.013 -0.036 0.008 -0.008 -0.007 0.005 0.015 0.010 0.016
+ AV02   475626  6577211   230 0.004 -0.000 0.007 -0.011 -0.012 0.004 0.027 0.001 0.013
+ AV03   475126  6582593   360 -0.003 -0.006 0.008 0.019 0.025 0.006 0.022 0.004 0.017
+ AV04   474720  6580513   916 -0.072 -0.058 0.008 0.002 0.008 0.006 0.073 0.060 0.018
+ AV05   475971  6580539  1037 0.049 0.035 0.014 0.030 0.015 0.010 0.103 0.108 0.030

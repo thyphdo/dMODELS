@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+   <Document>
+      <name>Augustine2006Map</name>
+      <Placemark>
+         <Snippet maxLines="0"> </Snippet>
+         <description> </description>
+         <name>AUGL</name>
+         <Style>
+            <IconStyle>
+               <Icon>
+                  <href>E:\dMODELS\V 2.0\GPS\utilities\create kml\placemark_circle.png</href>
+               </Icon>
+               <scale>1</scale>
+            </IconStyle>
+         </Style>
+         <Point>
+            <coordinates>-153.35391,59.3703,0</coordinates>
+         </Point>
+      </Placemark>
+      <Placemark>
+         <Snippet maxLines="0"> </Snippet>
+         <description> </description>
+         <name>AV01</name>
+         <Style>
+            <IconStyle>
+               <Icon>
+                  <href>E:\dMODELS\V 2.0\GPS\utilities\create kml\placemark_circle.png</href>
+               </Icon>
+               <scale>1</scale>
+            </IconStyle>
+         </Style>
+         <Point>
+            <coordinates>-153.4608,59.3585,0</coordinates>
+         </Point>
+      </Placemark>
+      <Placemark>
+         <Snippet maxLines="0"> </Snippet>
+         <description> </description>
+         <name>AV02</name>
+         <Style>
+            <IconStyle>
+               <Icon>
+                  <href>E:\dMODELS\V 2.0\GPS\utilities\create kml\placemark_circle.png</href>
+               </Icon>
+               <scale>1</scale>
+            </IconStyle>
+         </Style>
+         <Point>
+            <coordinates>-153.42839,59.333,0</coordinates>
+         </Point>
+      </Placemark>
+      <Placemark>
+         <Snippet maxLines="0"> </Snippet>
+         <description> </description>
+         <name>AV03</name>
+         <Style>
+            <IconStyle>
+               <Icon>
+                  <href>E:\dMODELS\V 2.0\GPS\utilities\create kml\placemark_circle.png</href>
+               </Icon>
+               <scale>1</scale>
+            </IconStyle>
+         </Style>
+         <Point>
+            <coordinates>-153.4378,59.3813,0</coordinates>
+         </Point>
+      </Placemark>
+      <Placemark>
+         <Snippet maxLines="0"> </Snippet>
+         <description> </description>
+         <name>AV04</name>
+         <Style>
+            <IconStyle>
+               <Icon>
+                  <href>E:\dMODELS\V 2.0\GPS\utilities\create kml\placemark_circle.png</href>
+               </Icon>
+               <scale>1</scale>
+            </IconStyle>
+         </Style>
+         <Point>
+            <coordinates>-153.4447,59.3626,0</coordinates>
+         </Point>
+      </Placemark>
+      <Placemark>
+         <Snippet maxLines="0"> </Snippet>
+         <description> </description>
+         <name>AV05</name>
+         <Style>
+            <IconStyle>
+               <Icon>
+                  <href>E:\dMODELS\V 2.0\GPS\utilities\create kml\placemark_circle.png</href>
+               </Icon>
+               <scale>1</scale>
+            </IconStyle>
+         </Style>
+         <Point>
+            <coordinates>-153.4227,59.3629,0</coordinates>
+         </Point>
+      </Placemark>
+   </Document>
+</kml>

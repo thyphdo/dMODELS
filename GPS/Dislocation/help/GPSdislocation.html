@@ -1,0 +1,684 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>GPSdislocation.m</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-06-20"><meta name="DC.source" content="GPSdislocation.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>GPSdislocation.m</h1><!--introduction--><div><ul><li>This program inverts GPS measurements to find the best fit dislocation source.</li><li>M. Battaglia - <a href="mailto:mbattaglia@usgs.gov">mbattaglia@usgs.gov</a></li><li>Version: (05/21/2017)</li></ul></div><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Description</a></li><li><a href="#2">Legend for dislocation models</a></li><li><a href="#3">Program I/O files</a></li><li><a href="#4">To run the software</a></li><li><a href="#5">Plots</a></li><li><a href="#6">USGS Software Disclaimer</a></li></ul></div><h2 id="1">Description</h2><p>This program inverts GPS measurements to find the best fit dislocation source. * The inversion algorithm uses the MATLAB function fmincon (optimization toolbox) with a random grid search (Battaglia et al, JVGR 2013, 254, 1-4). * The dislocation script is based on Okada (1985), BSSA, 75(4), 1135-1154. * The error algorithm is based on Wright et al (1999), EPSL 172, 23&#8211;37.</p><h2 id="2">Legend for dislocation models</h2><div><ul><li>dip up         : U &gt; 0  -&gt; inverse/thrust fault</li><li>dip down       : U &lt; 0  -&gt; normal fault</li><li>strike right   : U &gt; 0  -&gt; right lateral strike slip fault</li><li>strike left    : U &lt; 0  -&gt; left lateral strike slip fault</li><li>tensile opening: U &gt; 0 -&gt; opening crack (dike)</li><li>tensile closing: U &lt; 0 -&gt; closing crack (dike)</li></ul></div><h2 id="3">Program I/O files</h2><p><b>Input files</b></p><div><ul><li>InputDataFile.txt      : text file with inversion parameters</li><li>[GPSdatafile].txt      : text file with GPS data</li><li>map.txt                : text file with volcano contour map</li></ul></div><p><b>Output files</b></p><div><ul><li>[GPSdatafile]RSL.txt   : text file with best-fit results</li><li>[GPSdatafile]RSL.jpg   : jpeg file with vector plot of best-fit results</li><li>[GPSdatafile]INV.txt   : text file with best-fit statistics</li><li>[GPSdatafile]INV.jpg   : jpeg file with best-fit statistics</li><li>[GPSdatafile]ERR.txt   : text file with best-fit parameters' errors</li><li>[GPSdatafile]ERR.jpg   : jpg file with best-fit parameters' errors</li></ul></div><p><b>Examples</b></p><p>Examples of the input and output files are available in the folder <i>examples</i></p><h2 id="4">To run the software</h2><p><b>TO RUN THE COMPILED VERSION</b></p><p><b>1 MATLAB Compiler</b></p><p><img vspace="5" hspace="5" src="readme.jpg" alt=""> </p><p><b>2 The following files/folders must be in the same directory of GPSdislocation.exe</b></p><div><ul><li>InputDataFile.txt</li><li>[GPSdatafile].txt</li><li>map.txt [optional]</li></ul></div><p><b>3 Edit the input files</b></p><div><ul><li>[GPSDataFile].txt</li><li>InputDataFile.txt</li></ul></div><p><b>4 Double click on GPSdislocation.exe</b></p><p><b>TO RUN THE MATLAB VERSION</b></p><p>The software runs on 64-bit GNU/Linux, Mac OS X, or MS-Windows, and it requires Matlab 9.2 (R2017a) or later. It is not currently usable on any 32-bit platform, on Solaris, or with Octave.</p><p><b>1 The following files/folders must be in the same directory of GPSSpheroid.m</b></p><div><ul><li>InputDataFile.txt</li><li>[GPSdatafile].txt</li><li>map.txt [optional]</li></ul></div><p><b>2 Edit the input files</b></p><div><ul><li>[GPSDataFile].txt</li><li>InputDataFile.txt</li></ul></div><p><b>3 Run GPSdislocation.m</b></p><h2 id="5">Plots</h2><p><b><i>[GPSdatafile]RSL.jpg</i> - vector plot with best fit results</b></p><p><img vspace="5" hspace="5" src="Augustine2006RSL.jpg" alt=""> </p><p><b><i>[GPSdatafile]INV.jpg</i> - histogram plot with best-fit statistics</b></p><p><img vspace="5" hspace="5" src="Augustine2006INV.jpg" alt=""> </p><p><b><i>[GPSdatafile]ERR.jpg</i>  - histogram plot with best-fit parameters' errors</b></p><p><img vspace="5" hspace="5" src="Augustine2006ERR.jpg" alt=""> </p><h2 id="6">USGS Software Disclaimer</h2><p>The software and related documentation were developed by the U.S. Geological Survey (USGS) for use by the USGS in fulfilling its mission. The software can be used, copied, modified, and distributed without any fee or cost. Use of appropriate credit is requested.</p><p>The USGS provides no warranty, expressed or implied, as to the correctness of the furnished software or the suitability for any purpose. The software has been tested, but as with any complex software, there could be undetected errors. Users who find errors are requested to report them to the USGS. The USGS has limited resources to assist non-USGS users; however, we make an attempt to fix reported problems and help whenever possible.</p><p><b>THE SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND</b></p><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% GPSdislocation.m 
+% 
+% * This program inverts GPS measurements to find the best fit dislocation source.
+% * M. Battaglia - mbattaglia@usgs.gov
+% * Version: (05/21/2017)
+%
+%% Description
+%
+% This program inverts GPS measurements to find the best fit dislocation source.
+% * The inversion algorithm uses the MATLAB function fmincon (optimization toolbox)
+% with a random grid search (Battaglia et al, JVGR 2013, 254, 1-4). 
+% * The dislocation script is based on Okada (1985), BSSA, 75(4), 1135-1154.
+% * The error algorithm is based on Wright et al (1999), EPSL 172, 23–37.
+%
+%% Legend for dislocation models
+%
+% * dip up         : U > 0  -> inverse/thrust fault 
+% * dip down       : U < 0  -> normal fault
+% * strike right   : U > 0  -> right lateral strike slip fault
+% * strike left    : U < 0  -> left lateral strike slip fault
+% * tensile opening: U > 0 -> opening crack (dike)
+% * tensile closing: U < 0 -> closing crack (dike)
+% 
+%% Program I/O files
+%
+% *Input files*
+%
+% * InputDataFile.txt      : text file with inversion parameters
+% * [GPSdatafile].txt      : text file with GPS data
+% * map.txt                : text file with volcano contour map
+%
+% *Output files*
+%
+% * [GPSdatafile]RSL.txt   : text file with best-fit results
+% * [GPSdatafile]RSL.jpg   : jpeg file with vector plot of best-fit results
+% * [GPSdatafile]INV.txt   : text file with best-fit statistics
+% * [GPSdatafile]INV.jpg   : jpeg file with best-fit statistics
+% * [GPSdatafile]ERR.txt   : text file with best-fit parameters' errors 
+% * [GPSdatafile]ERR.jpg   : jpg file with best-fit parameters' errors 
+%
+% *Examples*
+%
+% Examples of the input and output files are available in the folder
+% _examples_
+%
+%% To run the software 
+%
+% *TO RUN THE COMPILED VERSION* 
+% 
+% *1 MATLAB Compiler*
+%
+% <<readme.jpg>>
+% 
+% *2 The following files/folders must be in the same directory of
+% GPSdislocation.exe*
+% 
+% * InputDataFile.txt      
+% * [GPSdatafile].txt     
+% * map.txt [optional]             
+%
+% *3 Edit the input files*
+% 
+% * [GPSDataFile].txt
+% * InputDataFile.txt
+%
+% *4 Double click on GPSdislocation.exe*
+% 
+% *TO RUN THE MATLAB VERSION* 
+%
+% The software runs on 64-bit GNU/Linux, Mac OS X, or MS-Windows, and it requires 
+% Matlab 9.2 (R2017a) or later. It is not currently usable on any 32-bit platform, 
+% on Solaris, or with Octave.
+%
+% *1 The following files/folders must be in the same directory of
+% GPSSpheroid.m*
+% 
+% * InputDataFile.txt      
+% * [GPSdatafile].txt     
+% * map.txt [optional]             
+%
+% *2 Edit the input files*
+% 
+% * [GPSDataFile].txt
+% * InputDataFile.txt
+%
+% *3 Run GPSdislocation.m*
+%
+%% Plots 
+%
+% *_[GPSdatafile]RSL.jpg_ - vector plot with best fit results* 
+%
+% <<Augustine2006RSL.jpg>>
+%
+% *_[GPSdatafile]INV.jpg_ - histogram plot with best-fit statistics*
+%
+% <<Augustine2006INV.jpg>>
+%
+% *_[GPSdatafile]ERR.jpg_  - histogram plot with best-fit parameters' errors* 
+%  
+% <<Augustine2006ERR.jpg>>
+%  
+%% USGS Software Disclaimer 
+% The software and related documentation were developed by the U.S. 
+% Geological Survey (USGS) for use by the USGS in fulfilling its mission. 
+% The software can be used, copied, modified, and distributed without any 
+% fee or cost. Use of appropriate credit is requested. 
+%
+% The USGS provides no warranty, expressed or implied, as to the correctness 
+% of the furnished software or the suitability for any purpose. The software 
+% has been tested, but as with any complex software, there could be undetected 
+% errors. Users who find errors are requested to report them to the USGS. 
+% The USGS has limited resources to assist non-USGS users; however, we make 
+% an attempt to fix reported problems and help whenever possible. 
+%
+% *THE SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND*
+%
+%% 
+
+% INITIALIZE PARAMETERS
+clearvars; close all; clc;
+% load external function path (comment before compiling)
+addpath('./functions');
+% fmisearch OPTIONS 
+options = optimset('TolFun',1e-7,'TolX',1e-7,'MaxFunEvals',2000,'MaxIter',2000,'Algorithm','interior-point','Display','off');
+% get screen size
+scsz = get(0,'ScreenSize');
+% Poisson's ratio; shear modulus
+nu = 0.25;
+% do not display warnings
+warning('off','all');
+
+
+%% 
+
+% READ INPUT PARAMETER FILE 
+fid0 = fopen('InputDataFile.txt','r');
+% define file names
+FileName = textscan(fid0,'%s',1,'CommentStyle','%'); 
+filename = strtok(char(FileName{1}),'.');
+gpsFile = strcat(filename,'.txt');                                 % GPS data file
+stsFile = strcat(filename,'INV.txt');                              % best-fit statistics
+stsFilePlot = strcat(filename,'INV');  
+rslFile = strcat(filename,'RSL.txt');                              % best-fit results 
+rslFilePlot = strcat(filename,'RSL');                              
+errFile = strcat(filename,'ERR.txt');                              % errors statistics
+errFilePlot = strcat(filename,'ERR');                          
+% BEST FIT (OPTIMIZATION)
+% number of random grid searches
+Maxk = textscan(fid0,'%f',1,'CommentStyle','%'); 
+maxk = Maxk{1};
+% max dislocation opening [meters]
+MU = textscan(fid0,'%f',1,'CommentStyle','%');
+uMax = MU{1};
+% max bound (dx, dy) on search for dislocation Xi,Yi AND Xf,Yf [meters]
+MDx = textscan(fid0,'%f',1,'CommentStyle','%');  
+dx = MDx{1};
+% max bound on zb (dislocation lower limit) [meters]
+Mdpt = textscan(fid0,'%f',1,'CommentStyle','%');
+zbMax = Mdpt{1};
+% find best-fit solution? [Y/N]
+Mbst = textscan(fid0,'%s',1,'CommentStyle','%');  
+BstSw = Mbst{1};
+% compute errors [Y/N]
+Merr = textscan(fid0,'%s',1,'CommentStyle','%');  
+ErrSw = Merr{1};
+% GRAPHICS
+% plot contour map of the volcano (map.txt) [Y/N]
+Mmap = textscan(fid0,'%s',1,'CommentStyle','%');  
+MapSw = Mmap{1};
+% vector plot scale factor 
+Msc = textscan(fid0,'%f',1,'CommentStyle','%');  
+scale = Msc{1};
+% DISLOCATION
+% dislocation and motion along dislocation
+Mdis = textscan(fid0,'%s',1,'CommentStyle','%');  
+dislocation = char(Mdis{1}); 
+Mmot = textscan(fid0,'%s',1,'CommentStyle','%');
+motion = char(Mmot{1});
+% shear modulus [GPa]
+Mmu = textscan(fid0,'%f',1,'CommentStyle','%');
+mu = Mmu{1}; mu = mu*1E9;
+% moment magnitude
+Mmw = textscan(fid0,'%f',1,'CommentStyle','%');
+Mw = Mmw{1};
+
+
+%%  
+
+% READ DATA FILES  
+fprintf(1,'REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH LOAD GPS DATA REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-, loading %s\n',gpsFile);
+fidinp = fopen(gpsFile,'r');
+Mcom = textscan(fidinp,'%q',1); 
+    comment = char(Mcom{1});  
+Mven = textscan(fidinp,'%*s %f %f %f',1,'CommentStyle','%');
+    Xvent = Mven{1}; Yvent = Mven{2}; altvent = Mven{3}; 
+Mdat = textscan(fidinp,'%s %f %f %f %f %f %f %f %f %f','CommentStyle','%');
+    site = char(Mdat{1}); x = Mdat{2}; y = Mdat{3}; alt = Mdat{4};
+    u = Mdat{5}; du = Mdat{6}; 
+    v = Mdat{7}; dv = Mdat{8}; 
+    w   = Mdat{9}; dw = Mdat{10};
+
+if strcmp(MapSw,'Y') == 1
+    fprintf(1,'REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH LOAD MAP DATA REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-\n');
+    fidMap = fopen('map.txt','r');
+    Mxy = textscan(fidMap,'%f %f','CommentStyle','%');
+    xmap = Mxy{1}; ymap = Mxy{2}; 
+end
+
+
+%%  
+
+% INVERSION
+    
+    % set up inversion parameters
+    % data and errors
+    data = [u v w]; data = data(:);                                             % deformation
+    sigma = [du dv dw]; sigma = sigma(:);                                       % uncertainty 
+    SigW = diag(sigma.^2);                                                      % diagonal covariance matrix, m^2
+    WT = SigW\eye(size(SigW));                                                  % weight for least square, 1/m^2 (equivalent to inv(Sigw))
+
+    % define sign of dislocation displacement 
+    if strcmpi(motion,'opening') == 1 || strcmpi(motion,'up') == 1 || strcmpi(motion,'right') 
+         minU = 0.0001; maxU = uMax; signU = 0.01;
+    else
+        minU = -uMax; maxU = -0.0001; signU = -0.01;
+    end
+    
+    ztMin = altvent - min(alt);
+
+if strcmp(BstSw,'Y') == 1
+    h = waitbar(0,'OPTIMIZATION: please wait ...');    
+
+    k = 1;
+    while k <= maxk
+
+        Xi = min(x) + dx*rand; 
+        Yi = min(y) + dx*rand;
+        Xf = max(x) + dx*rand; 
+        Yf = max(y) + dx*rand; 
+        Zb = 10 + (zbMax-10)*rand;
+        Zt = 0.25*Zb;
+%        Wi = Zb;
+        Delta = 45 + 45*randn;
+   
+            [BF,fval,exitflag] = fmincon(@(VAR) X2vDislocation(VAR,dislocation,mu,nu,x,y,WT,data),...
+                        [Xi,Yi,Xf,Yf,Zb,signU,Delta,Zt],[],[],[],[],...
+                        [min(x)-dx,min(y)-dx,min(x)-dx,min(y)-dx,ztMin,minU,1,ztMin],...
+                        [max(x)+dx,max(y)+dx,max(x)+dx,max(y)+dx,zbMax,maxU,179,zbMax],@(VAR) momentMagnitude(VAR,mu,Mw),options);
+       
+   
+        if exitflag > 0 
+            bf_ef(k)    = exitflag;
+            bf_chi(k)   = fval;                                                 % best fit chi square
+            bf_xi(k)    = BF(1);                                                % best fit start point location (East), m 
+            bf_yi(k)    = BF(2);                                                % best fit start point locationb (North), m
+            bf_xf(k)    = BF(3);                                                % best fit endpoint location (East), m 
+            bf_yf(k)    = BF(4);                                                % best fit endpoint locationb (North), m
+            bf_zb(k)    = BF(5);                                                % best fit bottom depth, m 
+            bf_u(k)     = BF(6);                                                % best fit displacemet, m    
+            bf_delta(k) = BF(7);                                                % best fit dip angle
+            bf_zt(k)    = BF(8);                                                % best fit top depth, m 
+%            bf_W(k)     = BF(8);                                                % best fit width change, m
+            waitbar(k/maxk,h,sprintf('optimization loop: %u',k));
+            k = k+1;
+        end 
+    end
+    close(h);
+
+    % determine best fit parameters
+    [X2v,Iu] = min(bf_chi);
+    efu = bf_ef(Iu);                                                            % exit flag
+    XI = bf_xi(Iu);                                                             % dislocation endpoint location (east), m 
+    YI = bf_yi(Iu);                                                             % dislocation endpoint location (north), m
+    XF = bf_xf(Iu);                                                             % dislocation endpoint location (east), m 
+    YF = bf_yf(Iu);                                                             % dislocation endpoint location (north), m
+    ZB = bf_zb(Iu);                                                             % dislocation bottom depth, m
+    U = bf_u(Iu);                                                               % displacement, m
+    DELTA = bf_delta(Iu);                                                       % dip angle
+    ZT = bf_zt(Iu);                                                             % dislocation top depth, m
+%    W = bf_W(Iu);                                                              % width, m 
+
+    L = sqrt((XF-XI)^2+(YF-YI)^2);                                              % dislocation length
+    PHI= 90 - atand((YF-YI)/(XF-XI));                                           % dislocation strike (0 = North)
+%    ZT = ZB - W*sin(pi*DELTA/180);                                             % dislocation top depth
+    W = (ZB - ZT)/sind(DELTA);                                                  % dislocation top depth
+
+    [U1,V1,W1] = okada85(dislocation,XI,YI,XF,YF,ZT,ZB,U,DELTA,mu,nu,x,y);      % best fit solution
+
+    S = W*L; Mo = mu*S*U; MW = (2/3)*(log10(Mo) - 9.1);                         % surface, seismic moment, moment magnitude
+
+
+    %%  
+
+    % BEST-FIT STATISTICS
+    disp('REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH INVERSION STATISTICS REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH');
+
+    % plot figure with inversion statistics
+    figure('Visible','off','Position',[100 100 0.5*scsz(3) 0.66*scsz(4)],'Name','BEST-FIT STATISTICS');                         
+    N = 6;      % number of histogram bars
+    subplot(2,3,1); hist(bf_chi,N); title(['\chi^2_v: ',sprintf('%.1f',X2v)]); 
+    subplot(2,3,2); hist(bf_delta,N); title(['dip \delta: ',sprintf('%.0f [deg]',DELTA)]);
+    subplot(2,3,3); hist(bf_zt,N); title(['Z_T: ',sprintf('%.0f [m b.v.]',ZT)]);
+    subplot(2,3,4); hist(bf_zb,N); title(['Z_B: ',sprintf('%.0f [m b.v.]',ZB)]);
+    subplot(2,3,5); hist(bf_u,N); title(['U: ',sprintf('%.1f [m]',U)]);
+    subplot(2,3,6); text(0.1,0.25,['L: ',sprintf('%.0f [m]',L)]); 
+                    text(0.1,0.5,['strike \phi: ',sprintf('%.0f [deg]',PHI)]); 
+                    text(0.1,0.75,['W: ',sprintf('%.0f [m]',W)]); 
+    print(stsFilePlot,'-djpeg','-r300');
+
+    % print file with inversion statistics
+    fidinv = fopen(stsFile,'w+');                                           
+    fprintf(fidinv,'%s\n',char(comment));
+    fprintf(fidinv,'Input data file: %s\n',gpsFile);
+    fprintf(fidinv,'nLoops: %d\n',maxk);
+    fprintf(fidinv,'\n');
+    fprintf(fidinv,'Inversion parameters\n');
+    fprintf(fidinv,'X2v   : chi square\n');
+    fprintf(fidinv,'Xi,Yi : location [UTM]\n');
+    fprintf(fidinv,'Xf,Yf : location [UTM]\n');
+    fprintf(fidinv,'Zb    : depth [m b.v.]\n');
+    fprintf(fidinv,'U     : displacement [m]\n');
+    fprintf(fidinv,'delta : dip angle [deg]\n');
+    fprintf(fidinv,'W     : width [m]\n');
+    fprintf(fidinv,'\n');
+    fprintf(fidinv,'X2v Xi Yi Xf Yf Zb U delta Zt\n');
+        for i=1:length(bf_chi)
+            fprintf(fidinv,'%4.2f %8.0f %8.0f %8.0f %8.0f %5.0f %4.2f %4.0f %5.0f\n',...
+                       bf_chi(i),bf_xi(i),bf_yi(i),bf_xf(i),bf_yf(i),bf_zb(i),bf_u(i),bf_delta(i),bf_zt(i));
+        end    
+
+    %%   
+
+    % PRINT FILE WITH BEST-FIT RESULTS
+    disp('REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH PRINT FILE WITH BEST-FIT RESULTS  REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH')
+
+    fidout = fopen(rslFile,'w+');                                           
+    fprintf(fidout,'%s\n',char(comment));
+    fprintf(fidout,'Input data file: %s\n',gpsFile);
+    fprintf(fidout,'X2v: %.2f\n',X2v);
+    fprintf(fidout,'nLoops: %d\n',maxk);
+    fprintf(fidout,'\n');
+    fprintf(fidout,'Dislocation parameters\n');
+    fprintf(fidout,'Xi,Yi : location [UTM]\n');
+    fprintf(fidout,'Xf,Yf : location [UTM]\n');
+    fprintf(fidout,'Zt    : top depth [m b.v.]\n');
+    fprintf(fidout,'Zb    : bottom depth [m b.v.]\n');
+    fprintf(fidout,'delta : dip angle [deg]\n');
+    fprintf(fidout,'phi   : strike angle (deg, positive from N)\n');
+    fprintf(fidout,'U     : displacement [m]\n');
+    fprintf(fidout,'W     : width [m]\n');
+    fprintf(fidout,'L     : length [m]\n');
+    fprintf(fidout,'mu    : shear modulus [GPa]\n');
+    fprintf(fidout,'Mw    : moment magnitude\n');
+    fprintf(fidout,'\n');
+    fprintf(fidout,'%s %s\n',dislocation,motion);
+    fprintf(fidout,'Xi Yi Xf Yf Zt Zb\n');
+    fprintf(fidout,'%8.0f %8.0f %8.0f %8.0f %5.0f %5.0f\n',Xi,Yi,Xf,Yf,ZT,ZB);
+    fprintf(fidout,'delta phi\n');
+    fprintf(fidout,'%4.0f %4.0f\n',DELTA,PHI);
+    fprintf(fidout,'U W L mu Mw\n');
+    fprintf(fidout,'%4.2f %4.0f %4.0f %3.0f %3.1f\n',U,W,L,mu*1E-9,MW);
+    fprintf(fidout,'\n');
+    fprintf(fidout,'Site x y alt E model dE N model dN W model dW\n');
+    for i=1:length(x)
+        fprintf(fidout,'%5s %8.0f %8.0f %5.0f %5.3f %5.3f %5.3f %5.3f %5.3f %5.3f %5.3f %5.3f %5.3f\n',...
+                       site(i,:),x(i),y(i),alt(i),u(i),U1(i),du(i),v(i),V1(i),dv(i),w(i),W1(i),dw(i));
+    end    
+
+ 
+    %%    
+
+    % VECTOR PLOT WITH BEST-FIT RESULTS
+    disp('REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH VECTOR PLOT WITH BEST-FIT RESULTS  REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH')
+    figure('Visible','off','Position',[10 10 0.9*scsz(3) 0.6*scsz(4)],'Name','GPS');
+
+    % horizontal and vertical scale
+    hscale = scale*max(sqrt(u.^2+v.^2));                                               
+    vscale = 2*hscale;
+
+    %%    
+
+    % PLOT GPS HORIZONTAL VELOCITIES
+    subplot(1,2,1); hold on; 
+    p1 = plot(Xvent,Yvent,'or','MarkerSize',8,'MarkerFaceColor','w');           % plot crater location
+    p2 = plot(x,y,'s','MarkerSize',4); text(x*1.0005,y,site,'FontSize',6);      % plot GPS sites
+    s1 = plot([XI XF],[YI YF],'k','LineWidth',3);                               % plot dislocation trace at the surface
+    % vector plot - data
+    h1 = quiver(x,y,u/hscale,v/hscale,'r','LineWidth',1.5,'AutoScale','off','MaxHeadSize',0.1);     
+    hU = get(h1,'UData') ;
+    hV = get(h1,'VData') ;
+    set(h1,'UData',hU/hscale,'VData',hV/hscale)
+    % vector plot - model
+    h2 = quiver(x,y,U1/hscale,V1/hscale,'b','LineWidth',1,'AutoScale','off','MaxHeadSize',0.1);     
+    hU = get(h2,'UData') ;
+    hV = get(h2,'VData') ;
+    set(h2,'UData',hU/hscale,'VData',hV/hscale)
+    % plot error ellipses
+    duScale = u./h1.UData; dvScale = v./h1.VData;
+    for i=1:length(u)
+    [   xe,ye] = ellipse(h1.XData(i)+h1.UData(i),h1.YData(i)+h1.VData(i),du(i)./duScale(i),dv(i)/dvScale(i));
+        p3 = plot(xe,ye,'r','LineWidth',1.5);
+    end
+    % plot contour map
+    if strcmp(MapSw,'Y') == 1
+        p4 = plot(xmap,ymap,'k','LineWidth',1);
+    end
+
+    % plot velocity scale
+    XofLegend = min(get(gca,'XLim')) + 0.1*(max(get(gca,'XLim')) - min(get(gca,'XLim')));
+    YofLegend = min(get(gca,'YLim'));
+    FudgeFactor = 500; 
+    % vector scale
+    h3 = quiver(XofLegend, YofLegend, 10, 0,'k','LineWidth',1,'AutoScale','off','MaxHeadSize',0.3); 
+    hU = get(h3,'UData') ;
+    hV = get(h3,'VData') ;
+    set(h3,'UData',hU/hscale,'VData',hV/hscale) 
+    text(XofLegend + FudgeFactor, YofLegend  + FudgeFactor, sprintf('%3.2f m/yr',0.5*max(sqrt(u.^2+v.^2))));
+
+    % format plot
+    axis equal;
+    legend([p1 p2 h1 h2 s1],'vent','GPS site','data','model','source');
+    [token,remain] = strtok(comment, ',');
+    title(token);
+
+    %%    
+
+    % PLOT GPS VERTICAL VELOCITIES
+    faultHeight = ZB-ZT;
+    faultMidPoint = XI+0.5*(XF-XI);
+%    XD = [faultMidPoint; faultMidPoint+faultHeight*cosd(DELTA)];
+    XD = [XI XF];
+    ZD = [ZT ZB];
+
+    subplot(1,2,2); hold on;
+    p1 = plot(0,altvent,'r^','MarkerFaceColor','y');                            % vent
+    I = abs(x-Xvent) > abs(y-Yvent); 
+    xx = I.*(x-Xvent) + (1-I).*(y-Yvent);                                       % GPS sites X positions
+    p2 = plot(xx,alt,'s','MarkerSize',6,'MarkerFaceColor','c','MarkerEdgeColor','k');   % GPS sites
+    text(xx,-200*ones(size(xx)),site,'FontSize',6);                             % GPS sites labels
+    s1 = plot(XD-Xvent,altvent-ZD,'k','LineWidth',3);                           % plot dislocation
+    % vector plot - data
+    h1 = quiver(xx,alt,zeros(size(w)),w/vscale,'r','LineWidth',1.5,'AutoScale','off','MaxHeadSize',0.05);    
+    hU = get(h1,'UData') ;
+    hV = get(h1,'VData') ;
+    set(h1,'UData',hU/vscale,'VData',hV/vscale)
+    % vector plot - model
+    h2 = quiver(xx,alt,zeros(size(w)),W1/vscale,'b','LineWidth',1,'AutoScale','off','MaxHeadSize',0.05);     
+    hU = get(h2,'UData') ;
+    hV = get(h2,'VData') ;
+    set(h2,'UData',hU/hscale,'VData',hV/hscale)
+    % plot volcano topography
+    plot(1.2*xx,zeros(size(xx)),'LineWidth',0.25,'Color',[154 154 154]/255);    % sea level
+    xp = [xx' 0]; topo = [alt' altvent]; [B,I] = sort(xp);                      % volcano profile
+    p3 = plot(B,topo(I),'k','LineWidth',0.5);                                   % volcano profile
+    % plot error ellipses
+    dwScale = w./h1.VData; 
+    for i=1:length(w)
+        [xe,ye] = ellipse(h1.XData(i)+h1.UData(i),h1.YData(i)+h1.VData(i),0.3*dw(i)/dwScale(i),dw(i)/dwScale(i));
+        p3 = plot(xe,ye,'r','LineWidth',1.5);
+    end
+
+    % plot velocity scale
+    XofLegend = min(get(gca,'XLim')) + 0.2*(max(get(gca,'XLim')) - min(get(gca,'XLim')));
+    YofLegend = max(get(gca,'YLim')); 
+    FudgeFactor = 200;
+    h3 = quiver(XofLegend, YofLegend, 0, 10,'k','LineWidth',1,'AutoScale','off','MaxHeadSize',0.3);
+    hU = get(h3,'UData') ;
+    hV = get(h3,'VData') ;
+    text(XofLegend + FudgeFactor, YofLegend, ... 
+        sprintf('%3.2f m/yr',0.5*max(sqrt(u.^2+v.^2))),'Rotation',90);
+    set(h3,'UData',hU/vscale,'VData',hV/vscale) 
+
+    % format plot
+    axis equal;
+    legend([p1 p2 h1 h2 s1],'vent','GPS site','data','model','source');
+    title(strip(remain,','));
+
+    %%    
+
+    % PRINT FIGURE
+    set(gcf,'PaperPositionMode','auto')
+    print(rslFilePlot,'-djpeg','-r300'); 
+    print(rslFilePlot,'-depsc');  
+end
+
+
+if strcmp(ErrSw,'Y') == 1
+
+    %%    
+
+    % ESTIMATE BEST-FIT PARAMETERS' ERRORS
+    disp('REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH ESTIMATE PARAMETERS'' ERRORS REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-');
+
+    h = waitbar(0,'ERROR ESTIMATE: please wait ...');    
+for K = 1:100
+    
+        noise = sigma.*randn(size(sigma));
+        NoisyData = data + noise;                                               % deformation
+
+        k = 1;
+     while k <= maxk
+
+        Xi = min(x) + dx*rand; 
+        Yi = min(y) + dx*rand;
+        Xf = max(x) + dx*rand; 
+        Yf = max(y) + dx*rand; 
+        Zb = 10 + (zbMax-10)*rand;
+        Zt = 0.25*Zb;
+%        Wi = Zb;
+        Delta = 45 + 45*randn;
+   
+            [BF,fval,exitflag] = fmincon(@(VAR) X2vDislocation(VAR,dislocation,mu,nu,x,y,WT,data),...
+                        [Xi,Yi,Xf,Yf,Zb,signU,Delta,Zt],[],[],[],[],...
+                        [min(x)-dx,min(y)-dx,min(x)-dx,min(y)-dx,ztMin,minU,1,ztMin],...
+                        [max(x)+dx,max(y)+dx,max(x)+dx,max(y)+dx,zbMax,maxU,179,zbMax],@(VAR) momentMagnitude(VAR,mu,Mw),options);
+   
+        if exitflag > 0 
+            bf_ef(k)    = exitflag;
+            bf_chi(k)   = fval;                                                 % best fit chi square
+            bf_xi(k)    = BF(1);                                                % best fit start point location (East), m 
+            bf_yi(k)    = BF(2);                                                % best fit start point locationb (North), m
+            bf_xf(k)    = BF(3);                                                % best fit endpoint location (East), m 
+            bf_yf(k)    = BF(4);                                                % best fit endpoint locationb (North), m
+            bf_zb(k)    = BF(5);                                                % best fit bottom depth, m 
+            bf_u(k)     = BF(6);                                                % best fit displacemet, m    
+            bf_delta(k) = BF(7);                                                % best fit dip angle
+            bf_zt(k)    = BF(8);                                                % best fit top depth, m 
+%            bf_W(k)     = BF(8);                                                % best fit width change, m
+            k = k+1;
+        end 
+     end
+     
+     % determine best fit parameters
+    [eX2v(K),Iu] = min(bf_chi);
+    eXI(K) = bf_xi(Iu);                                                             % dislocation endpoint location (east), m 
+    eYI(K) = bf_yi(Iu);                                                             % dislocation endpoint location (north), m
+    eXF(K) = bf_xf(Iu);                                                             % dislocation endpoint location (east), m 
+    eYF(K) = bf_yf(Iu);                                                             % dislocation endpoint location (north), m
+    eZB(K) = bf_zb(Iu);                                                             % dislocation bottom depth, m
+    eU(K) = bf_u(Iu);                                                               % displacement, m
+    eDELTA(K) = bf_delta(Iu);                                                       % dip angle
+    eZT(K) = bf_zt(Iu);                                                             % dislocation top depth, m
+%    W = bf_W(Iu);                                                                  % width, m 
+    waitbar(K/100,h,sprintf('error Loop: %u',K));
+end
+close(h);
+
+    % additional parameters
+    eL = sqrt((eXF-eXI).^2+(eYF-eYI).^2);                                       % dislocation length
+    ePHI = 90 - atand((eYF-eYI)./(eXF-eXI));                                    % dislocation strike (0 = North)
+%    ZT = ZB - W*sin(pi*DELTA/180);                                             % dislocation top depth
+    eW = (eZB - eZT)./sind(eDELTA);                                             % dislocation top depth
+    eS = eW.*eL; eMo = mu*eS.*eU; eMW = (2/3)*(log10(eMo) - 9.1);                 % surface, seismic moment, moment magnitude
+
+    %%    
+
+    % PLOT FIGURE WITH ESTIMATED ERRORS
+    figure('Visible','off','Position',[100 100 0.5*scsz(3) 0.66*scsz(4)],'Name','ESTIMATED ERRORS');                         
+    N = 6;      % number of histogram bars
+    subplot(2,3,1); hist(eX2v,N); title('ERRORS \chi^2_v'); 
+    subplot(2,3,2); hist(eDELTA,N); title(['error \delta: ',sprintf('%.0f [deg]',std(eDELTA))]);
+    subplot(2,3,3); hist(eZT,N); title(['Z_T: ',sprintf('%.0f [m b.v.]',std(eZT))]);
+    subplot(2,3,4); hist(eZB,N); title(['Z_B: ',sprintf('%.0f [m b.v.]',std(eZB))]);
+    subplot(2,3,5); hist(eU,N); title(['U: ',sprintf('%.1f [m]',std(eU))]);
+    subplot(2,3,6); text(0.1,0.25,['eL: ',sprintf('%.0f [m]',std(eL))]); 
+                    text(0.1,0.5,['eStrike \phi: ',sprintf('%.0f [deg]',std(ePHI))]); 
+                    text(0.1,0.75,['eW: ',sprintf('%.0f [m]',std(eW))]); 
+    print(errFilePlot,'-djpeg','-r300');
+   
+    
+    %%    
+
+    % PRINT FILE WITH ESTIMATED ERRORS
+    fiderr = fopen(errFile,'w+');                                           
+    fprintf(fiderr,'%s\n',char(comment));
+    fprintf(fiderr,'Input data file: %s\n',gpsFile);
+    fprintf(fiderr,'iLoops: %d\n',maxk);
+    fprintf(fiderr,'\n');
+    fprintf(fiderr,'Dislocation parameters\n');
+    fprintf(fiderr,'Estimated errors (2 sigma)\n');
+    fprintf(fiderr,'Xi,Yi : location [UTM]\n');
+    fprintf(fiderr,'Xf,Yf : location [UTM]\n');
+    fprintf(fiderr,'ZT    : top depth [m b.v.]\n');
+    fprintf(fiderr,'ZB    : bottom depth [m b.v.]\n');
+    fprintf(fiderr,'DELTA : dip angle [deg]\n');
+    fprintf(fiderr,'PHI   : strike angle (deg, positive from N)\n');
+    fprintf(fiderr,'U     : displacement [m]\n');
+    fprintf(fiderr,'W     : width [m]\n');
+    fprintf(fiderr,'L     : length [m]\n');
+    fprintf(fiderr,'MW    : moment magnitude\n');
+    fprintf(fiderr,'\n');
+    fprintf(fiderr,'Xi    : %.0f [UTM]\n',2*std(eXI));
+    fprintf(fiderr,'Yi    : %.0f [UTM]\n',2*std(eYI));
+    fprintf(fiderr,'Xf    : %.0f [UTM]\n',2*std(eXF));
+    fprintf(fiderr,'Yf    : %.0f [UTM]\n',2*std(eYF));
+    fprintf(fiderr,'ZT    : %.0f [m]  \n',2*std(eZT));
+    fprintf(fiderr,'ZB    : %.0f [m]  \n',2*std(eZB));
+    fprintf(fiderr,'DELTA : %.0f [deg]\n',2*std(eDELTA));
+    fprintf(fiderr,'PHI   : %.0f [deg]\n',2*std(ePHI));
+    fprintf(fiderr,'U     : %.1f [m]  \n',2*std(eU));
+    fprintf(fiderr,'W     : %.0f [m]  \n',2*std(eW));
+    fprintf(fiderr,'L     : %.0f [m]  \n',2*std(eL));
+    fprintf(fiderr,'MW    : %.1f      \n',2*std(eMW));
+    fprintf(fiderr,'\n');
+    fprintf(fiderr,'eXI eYI eXF eYF eZT eZB eDELTA ePHI eU eW eL eMW\n');
+        for i=1:length(bf_chi)
+            fprintf(fiderr,'%8.0f %8.0f %8.0f %8.0f %5.0f %5.0f %4.0f %4.0f %2.0f %4.0f %4.0f %3.1f\n',...
+                       eXI(i),eYI(i),eXF(i),eYF(i),eZT(i),eZB(i),eDELTA(i),ePHI(i),eU(i),eW(i),eL(i),eMW(i));
+        end    
+end
+%%
+fclose('all'); disp('That''s all Folks!');
+##### SOURCE END #####
+--></body></html>

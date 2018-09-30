@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+   <Document>
+      <name>Augustine2006Vec</name>
+      <Folder>
+         <name>Polygon 1</name>
+         <Placemark>
+            <Snippet maxLines="0"> </Snippet>
+            <description> </description>
+            <name>Part 1</name>
+            <Style>
+               <LineStyle>
+                  <color>ff0000ff</color>
+                  <width>2</width>
+               </LineStyle>
+               <PolyStyle>
+                  <outline>1</outline>
+               </PolyStyle>
+            </Style>
+            <Polygon>
+               <outerBoundaryIs>
+                  <LinearRing>
+                     <coordinates> -153.35391,59.3703,0 -153.320589519312,59.372382530043,0 -153.35391,59.3703,0</coordinates>
+                  </LinearRing>
+               </outerBoundaryIs>
+            </Polygon>
+         </Placemark>
+         <Placemark>
+            <Snippet maxLines="0"> </Snippet>
+            <description> </description>
+            <name>Part 2</name>
+            <Style>
+               <LineStyle>
+                  <color>ff0000ff</color>
+                  <width>2</width>
+               </LineStyle>
+               <PolyStyle>
+                  <outline>1</outline>
+               </PolyStyle>
+            </Style>
+            <Polygon>
+               <outerBoundaryIs>
+                  <LinearRing>
+                     <coordinates> -153.320589519312,59.372382530043,0 -153.323635627223,59.3738961996733,0 -153.320589519312,59.372382530043,0</coordinates>
+                  </LinearRing>
+               </outerBoundaryIs>
+            </Polygon>
+         </Placemark>
+         <Placemark>
+            <Snippet maxLines="0"> </Snippet>
+            <description> </description>
+            <name>Part 3</name>
+            <Style>
+               <LineStyle>
+                  <color>ff0000ff</color>
+                  <width>2</width>
+               </LineStyle>
+               <PolyStyle>
+                  <outline>1</outline>
+               </PolyStyle>
+            </Style>
+            <Polygon>
+               <outerBoundaryIs>
+                  <LinearRing>
+                     <coordinates> -153.320589519312,59.372382530043,0 -153.323307615498,59.3703375551579,0 -153.320589519312,59.372382530043,0</coordinates>
+                  </LinearRing>
+               </outerBoundaryIs>
+            </Polygon>
+         </Placemark>
+         <Placemark>
+            <Snippet maxLines="0"> </Snippet>
+            <description> </description>
+            <name>Part 4</name>
+            <Style>
+               <LineStyle>
+                  <color>ff0000ff</color>
+                  <width>2</width>
+               </LineStyle>
+               <PolyStyle>
+                  <outline>1</outline>
+               </PolyStyle>
+            </Style>
+            <Polygon>
+               <outerBoundaryIs>
+                  <LinearRing>
+                     <coordinates> -153.4608,59.3585,0 -153.469824296853,59.3529465865519,0 -153.4608,59.3585,0</coordinates>
+                  </LinearRing>
+               </outerBoundaryIs>
+            </Polygon>
+         </Placemark>
+         <Placemark>
+            <Snippet maxLines="0"> </Snippet>
+            <description> </description>
+            <name>Part 5</name>
+            <Style>
+               <LineStyle>
+                  <color>ff0000ff</color>
+                  <width>2</width>
+               </LineStyle>
+               <PolyStyle>
+                  <outline>1</outline>
+               </PolyStyle>
+            </Style>
+            <Polygon>
+               <outerBoundaryIs>
+                  <LinearRing>
+                     <coordinates> -153.469824296853,59.3529465865519,0 -153.466424169762,59.3530420062591,0 -153.469824296853,59.3529465865519,0</coordinates>
+                  </LinearRing>
+               </outerBoundaryIs>
+            </Polygon>
+         </Placemark>
+         <Placemark>
+            <Snippet maxLines="0"> </Snippet>
+            <description> </description>
+            <name>Part 6</name>
+            <Style>
+               <LineStyle>
+                  <color>ff0000ff</color>
+                  <width>2</width>
+               </LineStyle>
+               <PolyStyle>
+                  <outline>1</outline>
+               </PolyStyle>
+            </Style>
+            <Polygon>
+               <outerBoundaryIs>
+                  <LinearRing>
+                     <coordinates> -153.469824296853,59.3529465865519,0 -153.468386094512,59.3560290438809,0 -153.469824296853,59.3529465865519,0</coordinates>
+                  </LinearRing>
+               </outerBoundaryIs>
+            </Polygon>
+         </Placemark>
+         <Placemark>
+            <Snippet maxLines="0"> </Snippet>
+            <description> </description>
+            <name>Part 7</name>
+            <Style>
+               <LineStyle>
+                  <color>ff0000ff</color>
+                  <width>2</width>
+               </LineStyle>
+               <PolyStyle>
+                  <outline>1</outline>
+               </PolyStyle>
+            </Style>
+            <Polygon>
+               <outerBoundaryIs>
+                  <LinearRing>
+                     <coordinates> -153.42839,59.333,0 -153.425613293276,59.3253640565089,0 -153.42839,59.333,0</coordinates>
+                  </LinearRing>
+               </outerBoundaryIs>
+            </Polygon>
+         </Placemark>
+         <Placemark>
+            <Snippet maxLines="0"> </Snippet>
+            <description> </description>
+            <name>Part 8</name>
+            <Style>
+               <LineStyle>
+                  <color>ff0000ff</color>
+                  <width>2</width>
+               </LineStyle>
+               <PolyStyle>
+                  <outline>1</outline>
+               </PolyStyle>
+            </Style>
+            <Polygon>
+               <outerBoundaryIs>
+                  <LinearRing>
+                     <coordinates> -153.425613293276,59.3253640565089,0 -153.4250216473,59.3287136720389,0 -153.425613293276,59.3253640565089,0</coordinates>
+                  </LinearRing>
+               </outerBoundaryIs>
+            </Polygon>
+         </Placemark>
+         <Placemark>
+            <Snippet maxLines="0"> </Snippet>
+            <description> </description>
+            <name>Part 9</name>
+            <Style>
+               <LineStyle>
+                  <color>ff0000ff</color>
+                  <width>2</width>
+               </LineStyle>
+               <PolyStyle>
+                  <outline>1</outline>
+               </PolyStyle>
+            </Style>
+            <Polygon>
+               <outerBoundaryIs>
+                  <LinearRing>
+                     <coordinates> -153.425613293276,59.3253640565089,0 -153.428342737432,59.3273938603805,0 -153.425613293276,59.3253640565089,0</coordinates>
+                  </LinearRing>
+               </outerBoundaryIs>
+            </Polygon>
+         </Placemark>
+         <Placemark>
+            <Snippet maxLines="0"> </Snippet>
+            <description> </description>
+            <name>Part 10</name>
+            <Style>
+               <LineStyle>
+                  <color>ff0000ff</color>
+                  <width>2</width>
+               </LineStyle>
+               <PolyStyle>
+                  <outline>1</outline>
+               </PolyStyle>
+            </Style>
+            <Polygon>
+               <outerBoundaryIs>
+                  <LinearRing>
+                     <coordinates> -153.4378,59.3813,0 -153.439882530043,59.3944893569392,0 -153.4378,59.3813,0</coordinates>
+                  </LinearRing>
+               </outerBoundaryIs>
+            </Polygon>
+         </Placemark>
+         <Placemark>
+            <Snippet maxLines="0"> </Snippet>
+            <description> </description>
+            <name>Part 11</name>
+            <Style>
+               <LineStyle>
+                  <color>ff0000ff</color>
+                  <width>2</width>
+               </LineStyle>
+               <PolyStyle>
+                  <outline>1</outline>
+               </PolyStyle>
+            </Style>
+            <Polygon>
+               <outerBoundaryIs>
+                  <LinearRing>
+                     <coordinates> -153.439882530043,59.3944893569392,0 -153.441103023339,59.391314397841,0 -153.439882530043,59.3944893569392,0</coordinates>
+                  </LinearRing>
+               </outerBoundaryIs>
+            </Polygon>
+         </Placemark>
+         <Placemark>
+            <Snippet maxLines="0"> </Snippet>
+            <description> </description>
+            <name>Part 12</name>
+            <Style>
+               <LineStyle>
+                  <color>ff0000ff</color>
+                  <width>2</width>
+               </LineStyle>
+               <PolyStyle>
+                  <outline>1</outline>
+               </PolyStyle>
+            </Style>
+            <Polygon>
+               <outerBoundaryIs>
+                  <LinearRing>
+                     <coordinates> -153.439882530043,59.3944893569392,0 -153.437590998047,59.3919756246008,0 -153.439882530043,59.3944893569392,0</coordinates>
+                  </LinearRing>
+               </outerBoundaryIs>
+            </Polygon>
+         </Placemark>
+         <Placemark>
+            <Snippet maxLines="0"> </Snippet>
+            <description> </description>
+            <name>Part 13</name>
+            <Style>
+               <LineStyle>
+                  <color>ff0000ff</color>
+                  <width>2</width>
+               </LineStyle>
+               <PolyStyle>
+                  <outline>1</outline>
+               </PolyStyle>
+            </Style>
+            <Polygon>
+               <outerBoundaryIs>
+                  <LinearRing>
+                     <coordinates> -153.4447,59.3626,0 -153.494680721033,59.363988353362,0 -153.4447,59.3626,0</coordinates>
+                  </LinearRing>
+               </outerBoundaryIs>
+            </Polygon>
+         </Placemark>
+         <Placemark>
+            <Snippet maxLines="0"> </Snippet>
+            <description> </description>
+            <name>Part 14</name>
+            <Style>
+               <LineStyle>
+                  <color>ff0000ff</color>
+                  <width>2</width>
+               </LineStyle>
+               <PolyStyle>
+                  <outline>1</outline>
+               </PolyStyle>
+            </Style>
+            <Polygon>
+               <outerBoundaryIs>
+                  <LinearRing>
+                     <coordinates> -153.494680721033,59.363988353362,0 -153.491783325481,59.3622064812634,0 -153.494680721033,59.363988353362,0</coordinates>
+                  </LinearRing>
+               </outerBoundaryIs>
+            </Polygon>
+         </Placemark>
+         <Placemark>
+            <Snippet maxLines="0"> </Snippet>
+            <description> </description>
+            <name>Part 15</name>
+            <Style>
+               <LineStyle>
+                  <color>ff0000ff</color>
+                  <width>2</width>
+               </LineStyle>
+               <PolyStyle>
+                  <outline>1</outline>
+               </PolyStyle>
+            </Style>
+            <Polygon>
+               <outerBoundaryIs>
+                  <LinearRing>
+                     <coordinates> -153.494680721033,59.363988353362,0 -153.491789486819,59.3657802054437,0 -153.494680721033,59.363988353362,0</coordinates>
+                  </LinearRing>
+               </outerBoundaryIs>
+            </Polygon>
+         </Placemark>
+         <Placemark>
+            <Snippet maxLines="0"> </Snippet>
+            <description> </description>
+            <name>Part 16</name>
+            <Style>
+               <LineStyle>
+                  <color>ff0000ff</color>
+                  <width>2</width>
+               </LineStyle>
+               <PolyStyle>
+                  <outline>1</outline>
+               </PolyStyle>
+            </Style>
+            <Polygon>
+               <outerBoundaryIs>
+                  <LinearRing>
+                     <coordinates> -153.4227,59.3629,0 -153.388685342631,59.3837253004303,0 -153.4227,59.3629,0</coordinates>
+                  </LinearRing>
+               </outerBoundaryIs>
+            </Polygon>
+         </Placemark>
+         <Placemark>
+            <Snippet maxLines="0"> </Snippet>
+            <description> </description>
+            <name>Part 17</name>
+            <Style>
+               <LineStyle>
+                  <color>ff0000ff</color>
+                  <width>2</width>
+               </LineStyle>
+               <PolyStyle>
+                  <outline>1</outline>
+               </PolyStyle>
+            </Style>
+            <Polygon>
+               <outerBoundaryIs>
+                  <LinearRing>
+                     <coordinates> -153.388685342631,59.3837253004303,0 -153.392085678485,59.3836376349467,0 -153.388685342631,59.3837253004303,0</coordinates>
+                  </LinearRing>
+               </outerBoundaryIs>
+            </Polygon>
+         </Placemark>
+         <Placemark>
+            <Snippet maxLines="0"> </Snippet>
+            <description> </description>
+            <name>Part 18</name>
+            <Style>
+               <LineStyle>
+                  <color>ff0000ff</color>
+                  <width>2</width>
+               </LineStyle>
+               <PolyStyle>
+                  <outline>1</outline>
+               </PolyStyle>
+            </Style>
+            <Polygon>
+               <outerBoundaryIs>
+                  <LinearRing>
+                     <coordinates> -153.388685342631,59.3837253004303,0 -153.390130570763,59.3806461309311,0 -153.388685342631,59.3837253004303,0</coordinates>
+                  </LinearRing>
+               </outerBoundaryIs>
+            </Polygon>
+         </Placemark>
+      </Folder>
+   </Document>
+</kml>

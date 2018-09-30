@@ -1,0 +1,309 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>PreProcessing.m</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-06-20"><meta name="DC.source" content="PreProcessing.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>PreProcessing.m</h1><!--introduction--><p>M. Battaglia - <a href="mailto:mbattaglia@usgs.gov">mbattaglia@usgs.gov</a></p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Description</a></li><li><a href="#2">Program I/O files</a></li><li><a href="#3">To run the software</a></li><li><a href="#4">See the map created</a></li><li><a href="#5">USGS Software Disclaimer</a></li></ul></div><h2 id="1">Description</h2><p>Version: (06/20/2017)</p><p>This program reads the GPS data file and plot the displacement vectors</p><h2 id="2">Program I/O files</h2><p><b>Input files</b></p><div><ul><li>InputDataFile.txt      : text file with inversion parameters</li><li>[GPSdatafile].txt      : text file with GPS data</li><li>map.txt                : text file with volcano contour map</li></ul></div><p><b>Ouput files</b></p><div><ul><li>[GPSdatafile]VPL.jpg   : vector plot of GPS data</li><li>[GPSdatafile]VPL.eps   : vector plot of GPS data</li></ul></div><h2 id="3">To run the software</h2><p><b>To run the compiled version</b></p><p>1 MATLAB Compiler</p><p><img vspace="5" hspace="5" src="readme.jpg" alt=""> </p><p>2 The following files must be in the same directory of PreProcessing.exe</p><div><ul><li>InputDataFile.txt</li><li>[GPSDataFile].txt</li><li>map.txt [optional]</li></ul></div><p>3 Edit/update <i>GPSDataFile.txt</i>, <i>InputDataFile.txt</i> and <i>map.txt</i></p><p>4 Double click on PreProcessing.exe</p><p><b>To run the MATLAB version</b></p><p>The software runs on 64-bit GNU/Linux, Mac OS X, or MS-Windows, and it requires Matlab 9.2 (R2017a) or later. It is not currently usable on any 32-bit platform, on Solaris, or with Octave.</p><p>1 The following files/*folders* must be in the same directory of PreProcessing.m</p><div><ul><li><b>functions</b></li><li>InputDataFile.txt</li><li>[GPSDataFile].txt</li><li>map.txt [optional]</li></ul></div><p>2 Edit/update <i>GPSDataFile.txt</i>, <i>InputDataFile.txt</i> and <i>map.txt</i></p><p>3 Run PreProcessing.m</p><h2 id="4">See the map created</h2><p>Vector plot precursory deformation at Agustine volcano (AK): scale factor <b>0.05</b></p><p><img vspace="5" hspace="5" src="Augustine2006VPL.jpg" alt=""> </p><p>Vector plot of long term subsidence at Medicine Lake volcano: scale factor <b>0.25</b></p><p><img vspace="5" hspace="5" src="MedicineLake2006VPL.jpg" alt=""> </p><h2 id="5">USGS Software Disclaimer</h2><p>The software and related documentation were developed by the U.S. Geological Survey (USGS) for use by the USGS in fulfilling its mission. The software can be used, copied, modified, and distributed without any fee or cost. Use of appropriate credit is requested.</p><p>The USGS provides no warranty, expressed or implied, as to the correctness of the furnished software or the suitability for any purpose. The software has been tested, but as with any complex software, there could be undetected errors. Users who find errors are requested to report them to the USGS. The USGS has limited resources to assist non-USGS users; however, we make an attempt to fix reported problems and help whenever possible.</p><p><b>THE SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND</b></p><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% PreProcessing.m 
+% 
+% M. Battaglia - mbattaglia@usgs.gov
+%
+%% Description
+%
+% Version: (06/20/2017)
+%
+% This program reads the GPS data file and plot the displacement vectors 
+%
+%% Program I/O files
+%
+% *Input files*
+%
+% * InputDataFile.txt      : text file with inversion parameters
+% * [GPSdatafile].txt      : text file with GPS data
+% * map.txt                : text file with volcano contour map
+%
+% *Ouput files*
+%
+% * [GPSdatafile]VPL.jpg   : vector plot of GPS data
+% * [GPSdatafile]VPL.eps   : vector plot of GPS data
+% 
+%% To run the software 
+%
+% *To run the compiled version* 
+% 
+% 1 MATLAB Compiler
+%
+% <<readme.jpg>>
+% 
+% 2 The following files must be in the same directory of PreProcessing.exe
+% 
+% * InputDataFile.txt
+% * [GPSDataFile].txt
+% * map.txt [optional]
+%
+% 3 Edit/update _GPSDataFile.txt_, _InputDataFile.txt_ and _map.txt_
+%
+% 4 Double click on PreProcessing.exe
+% 
+% *To run the MATLAB version* 
+%
+% The software runs on 64-bit GNU/Linux, Mac OS X, or MS-Windows, and it requires 
+% Matlab 9.2 (R2017a) or later. It is not currently usable on any 32-bit platform, 
+% on Solaris, or with Octave.
+%
+% 1 The following files/*folders* must be in the same directory of PreProcessing.m
+% 
+% * *functions*
+% * InputDataFile.txt
+% * [GPSDataFile].txt
+% * map.txt [optional]
+%
+% 2 Edit/update _GPSDataFile.txt_, _InputDataFile.txt_ and _map.txt_
+%
+% 3 Run PreProcessing.m
+%
+%% See the map created
+%
+% Vector plot precursory deformation at Agustine volcano (AK): scale factor *0.05* 
+%
+% <<Augustine2006VPL.jpg>>
+%
+% Vector plot of long term subsidence at Medicine Lake volcano: scale factor *0.25* 
+%
+% <<MedicineLake2006VPL.jpg>>
+%
+% 
+%% USGS Software Disclaimer 
+% The software and related documentation were developed by the U.S. 
+% Geological Survey (USGS) for use by the USGS in fulfilling its mission. 
+% The software can be used, copied, modified, and distributed without any 
+% fee or cost. Use of appropriate credit is requested. 
+%
+% The USGS provides no warranty, expressed or implied, as to the correctness 
+% of the furnished software or the suitability for any purpose. The software 
+% has been tested, but as with any complex software, there could be undetected 
+% errors. Users who find errors are requested to report them to the USGS. 
+% The USGS has limited resources to assist non-USGS users; however, we make 
+% an attempt to fix reported problems and help whenever possible. 
+%
+% *THE SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND*
+%
+%% 
+
+% INITIALIZE PARAMETERS
+clearvars; close all; clc;
+% load external function path
+addpath('./functions');
+% get screen size
+scsz = get(0,'ScreenSize');
+
+
+%% 
+
+% READ INPUT PARAMETER FILE 
+fid0 = fopen('InputDataFile.txt','r');
+% define file names
+FileName = textscan(fid0,'%s',1,'CommentStyle','%'); 
+filename = strtok(char(FileName{1}),'.');
+gpsFile = strcat(filename,'.txt');                                 % GPS data file
+% GRAPHICS
+% vector plot scale factor 
+Msc = textscan(fid0,'%f',1,'CommentStyle','%');  
+scale = Msc{1};
+% plot contour map of the volcano (map.txt) [Y/N]
+Mmap = textscan(fid0,'%s',1,'CommentStyle','%');  
+MapSw = Mmap{1};
+
+
+%% 
+
+% READ DATA FILES  
+fprintf(1,'REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH LOAD GPS DATA REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-, loading %s\n',gpsFile);
+fidinp = fopen(gpsFile,'r');
+Mcom = textscan(fidinp,'%q',1); 
+    comment = char(Mcom{1});  
+Mven = textscan(fidinp,'%*s %f %f %f',1,'CommentStyle','%');
+    Xvent = Mven{1}; Yvent = Mven{2}; altvent = Mven{3}; 
+Mdat = textscan(fidinp,'%s %f %f %f %f %f %f %f %f %f','CommentStyle','%');
+    site = char(Mdat{1}); x = Mdat{2}; y = Mdat{3}; alt = Mdat{4};
+    u = Mdat{5}; du = Mdat{6}; 
+    v = Mdat{7}; dv = Mdat{8}; 
+    w   = Mdat{9}; dw = Mdat{10};
+
+if strcmp(MapSw,'Y') == 1
+    fprintf(1,'REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH LOAD MAP DATA REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-\n');
+    fidMap = fopen('map.txt','r');
+    Mxy = textscan(fidMap,'%f %f','CommentStyle','%');
+    xmap = Mxy{1}; ymap = Mxy{2}; 
+end
+
+ 
+%%
+disp('REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH PLOT GPS VELOCITIES  REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH')
+figure('Visible','on','Position',[10 10 0.9*scsz(3) 0.6*scsz(4)],'Name','GPS');
+
+% horizontal and vertical scale
+hscale = scale*max(sqrt(u.^2+v.^2));                                               
+vscale = 2*hscale;
+
+
+%% 
+
+% PLOT GPS HORIZONTAL VELOCITIES
+subplot(1,2,1); hold on; 
+p1 = plot(Xvent,Yvent,'or','MarkerSize',10,'MarkerFaceColor','w');          % plot crater location
+p2 = plot(x,y,'s','MarkerSize',4); text(x*1.0005,y,site,'FontSize',6);      % plot GPS sites
+% vector plot - data
+h1 = quiver(x,y,u/hscale,v/hscale,'r','LineWidth',1.5,'AutoScale','off','MaxHeadSize',0.1);     
+hU = get(h1,'UData') ;
+hV = get(h1,'VData') ;
+set(h1,'UData',hU/hscale,'VData',hV/hscale)
+% plot error ellipses
+duScale = u./h1.UData; dvScale = v./h1.VData;
+for i=1:length(u)
+    [xe,ye] = ellipse(h1.XData(i)+h1.UData(i),h1.YData(i)+h1.VData(i),du(i)./duScale(i),dv(i)/dvScale(i));
+    p3 = plot(xe,ye,'r','LineWidth',1.5);
+end
+% plot contour map
+if strcmp(MapSw,'Y') == 1
+    p4 = plot(xmap,ymap,'k','LineWidth',1);
+end
+
+% plot velocity scale
+XofLegend = min(get(gca,'XLim')) + 0.1*(max(get(gca,'XLim')) - min(get(gca,'XLim')));
+YofLegend = min(get(gca,'YLim'));
+FudgeFactor = 500; 
+    % vector scale
+h3 = quiver(XofLegend, YofLegend, 10, 0,'k','LineWidth',1,'AutoScale','off','MaxHeadSize',0.3); 
+hU = get(h3,'UData') ;
+hV = get(h3,'VData') ;
+set(h3,'UData',hU/hscale,'VData',hV/hscale) 
+text(XofLegend + FudgeFactor, YofLegend  + FudgeFactor, sprintf('%.3f m/yr',0.5*max(sqrt(u.^2+v.^2))));
+
+% format plot
+axis equal;
+legend([p1 p2 h1],'vent','GPS site','data','Location','best');
+[token,remain] = strtok(comment, ',');
+title(token);
+
+
+%% 
+
+% PLOT GPS VERTICAL VELOCITIES
+subplot(1,2,2); hold on;
+p1 = plot(0,altvent,'r^','MarkerFaceColor','y');                            % vent
+I = abs(x-Xvent) > abs(y-Yvent); 
+xx = I.*(x-Xvent) + (1-I).*(y-Yvent);                                       % GPS sites X positions
+p2 = plot(xx,alt,'s','MarkerSize',6,'MarkerFaceColor','c','MarkerEdgeColor','k');   % GPS sites
+% vector plot - data
+h1 = quiver(xx,alt,zeros(size(w)),w/vscale,'r','LineWidth',1.5,'AutoScale','off','MaxHeadSize',0.05);    
+hU = get(h1,'UData') ;
+hV = get(h1,'VData') ;
+set(h1,'UData',hU/vscale,'VData',hV/vscale)
+
+plot(1.2*xx,zeros(size(xx)),'LineWidth',0.25,'Color',[154 154 154]/255);    % sea level
+xp = [xx' 0]; topo = [alt' altvent]; [B,I] = sort(xp);                      % volcano profile
+p3 = plot(B,topo(I),'k','LineWidth',0.5);                                   % volcano profile
+% plot error ellipses
+dwScale = w./h1.VData; 
+for i=1:length(w)
+    [xe,ye] = ellipse(h1.XData(i)+h1.UData(i),h1.YData(i)+h1.VData(i),0.3*dw(i)/dwScale(i),dw(i)/dwScale(i));
+    p3 = plot(xe,ye,'r','LineWidth',1.5);
+end
+
+% plot velocity scale
+XofLegend = min(get(gca,'XLim')) + 0.2*(max(get(gca,'XLim')) - min(get(gca,'XLim')));
+YofLegend = max(get(gca,'YLim')); 
+FudgeFactor = 200;
+h3 = quiver(XofLegend, YofLegend, 0, 10,'k','LineWidth',1,'AutoScale','off','MaxHeadSize',0.3);
+hU = get(h3,'UData') ;
+hV = get(h3,'VData') ;
+text(XofLegend + FudgeFactor, YofLegend, ... 
+     sprintf('%.3f m/yr',0.5*max(sqrt(u.^2+v.^2))),'Rotation',90);
+set(h3,'UData',hU/vscale,'VData',hV/vscale) 
+
+% format plot
+yy = min(get(gca,'YLim'));
+text(xx,.9*yy*ones(size(xx)),site,'FontSize',6);                             %GPS sites labels
+legend([p1 p2 h1],'vent','GPS site','data');
+title(strip(remain,','));
+
+
+%% 
+
+% PRINT FIGURE
+set(gcf,'PaperPositionMode','auto')
+print(strcat(filename,'VPL'),'-djpeg','-r300'); 
+print(strcat(filename,'VPL'),'-depsc');  
+
+
+%% 
+
+% END OF SCRIPT
+fclose('all'); disp('That''s all Folks!');
+##### SOURCE END #####
+--></body></html>

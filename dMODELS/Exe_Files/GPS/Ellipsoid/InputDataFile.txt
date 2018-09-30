@@ -1,0 +1,25 @@
+% INPUT DATA FILE FOR RADIALLY SIMMETRIC SOURCES: SPHERE, SPHEROID & SILL
+%
+% TEXT FILE WITH GPS DATA
+Augustine2006.txt
+%
+% BEST FIT (OPTIMIZATION)
+% number of random grid searches [64, 128, 256, 512]
+64
+% spheroid semi-major axis [meters]
+250
+% search radius [meters]
+5000
+% MAX source depth [meters] (depth below sea level is positive)
+2000
+% find best-fit solution? [Y/N]
+Y
+% compute errors? [Y/N]
+N
+% GRAPHICS
+% plot contour map of the volcano (map.txt)? [Y/N]
+Y
+% SPHEROID
+% model data with vertical spheroid? [Y/N]
+N
+
