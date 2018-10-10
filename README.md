@@ -1,7 +1,5 @@
 # dMODELS
 
-One Paragraph of project description goes here
-
 ### Prerequisites
 
 1) Java platform
